@@ -1,0 +1,3658 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ModeNest - Trendy Modeboutique</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap");
+
+      :root {
+        --primary: #212529;
+        --secondary: #ff6b6b;
+        --accent: #4ecdc4;
+        --light: #f8f9fa;
+        --medium: #e9ecef;
+        --dark: #343a40;
+        --text: #495057;
+        --border-radius: 8px;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        --transition: all 0.3s ease;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background-color: var(--light);
+        color: var(--text);
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .section-spacing {
+        padding: 80px 0;
+      }
+
+      /* Announcement Bar */
+      .announcement-bar {
+        background-color: var(--primary);
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        font-size: 14px;
+      }
+
+      .announcement-bar .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .announcement-bar p {
+        margin: 0;
+      }
+
+      .announcement-bar .highlight {
+        color: var(--secondary);
+        font-weight: 600;
+        margin: 0 5px;
+      }
+
+      .announcement-indicators {
+        display: flex;
+        margin-left: 15px;
+      }
+
+      .indicator {
+        width: 8px;
+        height: 8px;
+        background-color: rgba(255, 255, 255, 0.4);
+        border-radius: 50%;
+        margin: 0 3px;
+        cursor: pointer;
+      }
+
+      .indicator.active {
+        background-color: white;
+      }
+
+      /* Header Styles */
+      header {
+        background-color: white;
+        box-shadow: var(--shadow);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        transition: var(--transition);
+      }
+
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+      }
+
+      .logo {
+        font-family: "Playfair Display", serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+      }
+
+      .logo span {
+        color: var(--secondary);
+      }
+
+      .logo img {
+        height: 40px;
+        margin-right: 10px;
+      }
+
+      nav {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+      }
+
+      nav ul li {
+        position: relative;
+        margin: 0 15px;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: var(--dark);
+        font-weight: 500;
+        padding: 8px 0;
+        display: inline-block;
+        transition: var(--transition);
+      }
+
+      nav ul li a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        background-color: var(--secondary);
+        left: 0;
+        bottom: 0;
+        transition: var(--transition);
+      }
+
+      nav ul li a:hover {
+        color: var(--secondary);
+      }
+
+      nav ul li a:hover::after,
+      nav ul li a.active::after {
+        width: 100%;
+      }
+
+      nav ul li a.active {
+        color: var(--secondary);
+      }
+
+      .dropdown-container {
+        position: relative;
+      }
+
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: white;
+        min-width: 200px;
+        box-shadow: var(--shadow);
+        border-radius: var(--border-radius);
+        padding: 10px 0;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: var(--transition);
+        z-index: 100;
+      }
+
+      .dropdown-container:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .dropdown-menu li {
+        margin: 0;
+        width: 100%;
+      }
+
+      .dropdown-menu li a {
+        padding: 8px 20px;
+        display: block;
+        color: var(--text);
+        font-weight: 400;
+      }
+
+      .dropdown-menu li a:hover {
+        background-color: var(--light);
+      }
+
+      .mega-menu {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        box-shadow: var(--shadow);
+        padding: 30px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: var(--transition);
+        z-index: 100;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+      }
+
+      .dropdown-container:hover .mega-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .mega-menu-column h3 {
+        color: var(--primary);
+        font-size: 16px;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--medium);
+      }
+
+      .mega-menu-column ul {
+        display: block;
+      }
+
+      .mega-menu-column ul li {
+        margin-bottom: 8px;
+      }
+
+      .mega-menu-column ul li a {
+        color: var(--text);
+        font-weight: 400;
+        transition: var(--transition);
+        padding: 0;
+      }
+
+      .mega-menu-column ul li a:hover {
+        color: var(--secondary);
+        padding-left: 5px;
+      }
+
+      .header-icons {
+        display: flex;
+        align-items: center;
+      }
+
+      .header-icon {
+        position: relative;
+        margin-left: 20px;
+        color: var(--dark);
+        text-decoration: none;
+        font-size: 20px;
+        transition: var(--transition);
+        cursor: pointer;
+      }
+
+      .header-icon:hover {
+        color: var(--secondary);
+      }
+
+      .cart-count {
+        background-color: var(--secondary);
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        font-weight: 600;
+      }
+
+      .search-container {
+        position: relative;
+      }
+
+      .search-input {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 300px;
+        display: none;
+        padding: 20px;
+        background-color: white;
+        box-shadow: var(--shadow);
+        border-radius: var(--border-radius);
+        z-index: 100;
+      }
+
+      .search-input.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .search-form {
+        display: flex;
+        align-items: center;
+        border: 1px solid var(--medium);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+      }
+
+      .search-form input {
+        flex: 1;
+        border: none;
+        padding: 10px 15px;
+        font-size: 14px;
+        outline: none;
+      }
+
+      .search-form button {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .search-form button:hover {
+        background-color: var(--secondary);
+      }
+
+      .menu-toggle {
+        display: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: var(--dark);
+        transition: var(--transition);
+      }
+
+      .menu-toggle:hover {
+        color: var(--secondary);
+      }
+
+      /* Breadcrumb */
+      .breadcrumb {
+        background-color: var(--medium);
+        padding: 15px 0;
+        font-size: 14px;
+      }
+
+      .breadcrumb-list {
+        display: flex;
+        list-style: none;
+      }
+
+      .breadcrumb-item {
+        display: flex;
+        align-items: center;
+      }
+
+      .breadcrumb-item:not(:last-child)::after {
+        content: "/";
+        margin: 0 10px;
+        color: var(--text);
+      }
+
+      .breadcrumb-item a {
+        color: var(--text);
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      .breadcrumb-item a:hover {
+        color: var(--secondary);
+      }
+
+      .breadcrumb-item.active {
+        color: var(--primary);
+        font-weight: 500;
+      }
+
+      /* Hero Section */
+      .hero {
+        position: relative;
+        height: 600px;
+        overflow: hidden;
+      }
+
+      .hero-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 1s ease;
+      }
+
+      .hero-slide.active {
+        opacity: 1;
+        z-index: 1;
+      }
+
+      .hero-slide-1 {
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.5)
+          ),
+          url("https://cdn.pixabay.com/photo/2016/11/22/19/08/hangers-1850082_960_720.jpg");
+      }
+
+      .hero-slide-2 {
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.5)
+          ),
+          url("https://cdn.pixabay.com/photo/2017/08/01/11/48/woman-2564660_960_720.jpg");
+      }
+
+      .hero-slide-3 {
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.5)
+          ),
+          url("https://cdn.pixabay.com/photo/2016/03/27/22/16/fashion-1284496_960_720.jpg");
+      }
+
+      .hero-content {
+        color: white;
+        max-width: 600px;
+        padding: 0 20px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-subtitle {
+        font-size: 18px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+        transition-delay: 0.2s;
+      }
+
+      .hero-title {
+        font-family: "Playfair Display", serif;
+        font-size: 60px;
+        line-height: 1.2;
+        margin-bottom: 20px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+        transition-delay: 0.4s;
+      }
+
+      .hero-description {
+        font-size: 18px;
+        margin-bottom: 30px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+        transition-delay: 0.6s;
+      }
+
+      .hero-btn {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+        transition-delay: 0.8s;
+      }
+
+      .hero-slide.active .hero-subtitle,
+      .hero-slide.active .hero-title,
+      .hero-slide.active .hero-description,
+      .hero-slide.active .hero-btn {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .hero-navigation {
+        position: absolute;
+        bottom: 30px;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        z-index: 2;
+      }
+
+      .hero-dot {
+        width: 12px;
+        height: 12px;
+        margin: 0 5px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .hero-dot.active {
+        background-color: white;
+        transform: scale(1.2);
+      }
+
+      .hero-arrows {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 30px;
+        transform: translateY(-50%);
+        z-index: 2;
+      }
+
+      .hero-arrow {
+        width: 50px;
+        height: 50px;
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .hero-arrow:hover {
+        background-color: var(--secondary);
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-block;
+        padding: 12px 30px;
+        border-radius: var(--border-radius);
+        text-decoration: none;
+        font-weight: 500;
+        text-align: center;
+        transition: var(--transition);
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .btn-primary {
+        background-color: var(--secondary);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: var(--primary);
+      }
+
+      .btn-outline {
+        border: 2px solid var(--primary);
+        color: var(--primary);
+        background-color: transparent;
+      }
+
+      .btn-outline:hover {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      .btn-sm {
+        padding: 8px 20px;
+        font-size: 14px;
+      }
+
+      .btn-lg {
+        padding: 15px 40px;
+        font-size: 18px;
+      }
+
+      /* Section Titles */
+      .section-title {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+
+      .section-subtitle {
+        color: var(--secondary);
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 500;
+        margin-bottom: 10px;
+      }
+
+      .section-heading {
+        font-family: "Playfair Display", serif;
+        font-size: 36px;
+        color: var(--primary);
+        margin-bottom: 15px;
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-description {
+        max-width: 700px;
+        margin: 0 auto;
+        color: var(--text);
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      /* Featured Categories */
+      .categories {
+        padding: 80px 0;
+      }
+
+      .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+      }
+
+      .category-card {
+        position: relative;
+        height: 250px;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+      }
+
+      .category-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .category-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+      }
+
+      .category-card:hover img {
+        transform: scale(1.1);
+      }
+
+      .category-card .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.7),
+          rgba(0, 0, 0, 0.2)
+        );
+        color: white;
+        transition: var(--transition);
+        text-align: center;
+        padding: 20px;
+      }
+
+      .category-card:hover .overlay {
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.8),
+          rgba(0, 0, 0, 0.4)
+        );
+      }
+
+      .category-card h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 24px;
+        margin-bottom: 10px;
+        transform: translateY(10px);
+        opacity: 0;
+        transition: transform 0.3s ease 0.1s, opacity 0.3s ease 0.1s;
+      }
+
+      .category-card p {
+        font-size: 14px;
+        margin-bottom: 15px;
+        transform: translateY(10px);
+        opacity: 0;
+        transition: transform 0.3s ease 0.2s, opacity 0.3s ease 0.2s;
+      }
+
+      .category-card .btn {
+        transform: translateY(10px);
+        opacity: 0;
+        transition: transform 0.3s ease 0.3s, opacity 0.3s ease 0.3s,
+          background-color 0.3s ease, color 0.3s ease;
+      }
+
+      .category-card:hover h3,
+      .category-card:hover p,
+      .category-card:hover .btn {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      /* Trending Section */
+      .trending {
+        padding: 80px 0;
+        background-color: var(--light);
+      }
+
+      .trending-tabs {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 40px;
+      }
+
+      .trending-tab {
+        padding: 10px 20px;
+        margin: 0 5px;
+        border: none;
+        background-color: transparent;
+        font-weight: 500;
+        font-size: 16px;
+        color: var(--text);
+        cursor: pointer;
+        position: relative;
+        transition: var(--transition);
+      }
+
+      .trending-tab::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background-color: var(--secondary);
+        transform: translateX(-50%);
+        transition: width 0.3s ease;
+      }
+
+      .trending-tab.active {
+        color: var(--secondary);
+      }
+
+      .trending-tab.active::after {
+        width: 30px;
+      }
+
+      .trending-tab:hover {
+        color: var(--secondary);
+      }
+
+      .trending-content {
+        display: none;
+      }
+
+      .trending-content.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+      }
+
+      /* Featured Products */
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+      }
+
+      .product-card {
+        background-color: white;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        position: relative;
+      }
+
+      .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .product-img {
+        height: 250px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .product-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+      }
+
+      .product-card:hover .product-img img {
+        transform: scale(1.1);
+      }
+
+      .product-badges {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .product-badge {
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .badge-new {
+        background-color: var(--accent);
+        color: white;
+      }
+
+      .badge-sale {
+        background-color: var(--secondary);
+        color: white;
+      }
+
+      .badge-out {
+        background-color: var(--text);
+        color: white;
+      }
+
+      .badge-hot {
+        background-color: #fd7e14;
+        color: white;
+      }
+
+      .product-actions {
+        position: absolute;
+        bottom: -50px;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 15px;
+        background-color: rgba(255, 255, 255, 0.9);
+        transition: bottom 0.3s ease;
+        z-index: 1;
+      }
+
+      .product-card:hover .product-actions {
+        bottom: 0;
+      }
+
+      .product-action-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: white;
+        color: var(--primary);
+        border: 1px solid var(--medium);
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: var(--transition);
+        font-size: 16px;
+      }
+
+      .product-action-btn:hover {
+        background-color: var(--secondary);
+        color: white;
+        border-color: var(--secondary);
+      }
+
+      .product-action-btn.active {
+        background-color: var(--secondary);
+        color: white;
+        border-color: var(--secondary);
+      }
+
+      .product-info {
+        padding: 20px;
+      }
+
+      .product-category {
+        color: var(--text);
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+
+      .product-title {
+        font-weight: 500;
+        font-size: 16px;
+        color: var(--primary);
+        margin-bottom: 10px;
+        transition: var(--transition);
+        display: block;
+        text-decoration: none;
+      }
+
+      .product-title:hover {
+        color: var (--secondary);
+      }
+
+      .product-rating {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .rating-stars {
+        color: #ffc107;
+        margin-right: 5px;
+      }
+
+      .rating-count {
+        font-size: 14px;
+        color: var(--text);
+      }
+
+      .product-price {
+        display: flex;
+        align-items: center;
+      }
+
+      .current-price {
+        font-weight: 600;
+        font-size: 18px;
+        color: var(--primary);
+      }
+
+      .old-price {
+        color: #95a5a6;
+        text-decoration: line-through;
+        font-size: 14px;
+        margin-left: 10px;
+      }
+
+      .quick-view-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+
+      .quick-view-modal.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .quick-view-content {
+        background-color: white;
+        border-radius: var(--border-radius);
+        max-width: 900px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 30px;
+        position: relative;
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+      }
+
+      .quick-view-modal.active .quick-view-content {
+        transform: translateY(0);
+      }
+
+      .quick-view-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: var(--light);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: var(--transition);
+        z-index: 1;
+      }
+
+      .quick-view-close:hover {
+        background-color: var(--secondary);
+        color: white;
+      }
+
+      .quick-view-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+
+      .quick-view-gallery {
+        position: relative;
+      }
+
+      .quick-view-img {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: var(--border-radius);
+      }
+
+      .quick-view-thumbs {
+        display: flex;
+        margin-top: 15px;
+        gap: 10px;
+      }
+
+      .quick-view-thumb {
+        width: 80px;
+        height: 80px;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: var(--transition);
+      }
+
+      .quick-view-thumb.active {
+        border-color: var(--secondary);
+      }
+
+      .quick-view-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .quick-view-details h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .quick-view-price {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .quick-view-current {
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--secondary);
+      }
+
+      .quick-view-old {
+        font-size: 16px;
+        text-decoration: line-through;
+        color: var(--text);
+        margin-left: 10px;
+      }
+
+      .quick-view-rating {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .quick-view-stars {
+        color: #ffc107;
+        margin-right: 10px;
+      }
+
+      .quick-view-count {
+        color: var(--text);
+      }
+
+      .quick-view-description {
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      .quick-view-colors {
+        margin-bottom: 20px;
+      }
+
+      .color-title {
+        font-weight: 500;
+        margin-bottom: 10px;
+      }
+
+      .color-options {
+        display: flex;
+        gap: 10px;
+      }
+
+      .color-option {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        position: relative;
+        border: 2px solid transparent;
+      }
+
+      .color-option.active {
+        border-color: var(--secondary);
+      }
+
+      .color-black {
+        background-color: #000;
+      }
+
+      .color-blue {
+        background-color: #3498db;
+      }
+
+      .color-red {
+        background-color: #e74c3c;
+      }
+
+      .color-green {
+        background-color: #2ecc71;
+      }
+
+      .quick-view-sizes {
+        margin-bottom: 20px;
+      }
+
+      .size-title {
+        font-weight: 500;
+        margin-bottom: 10px;
+      }
+
+      .size-options {
+        display: flex;
+        gap: 10px;
+      }
+
+      .size-option {
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--medium);
+        border-radius: var(--border-radius);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .size-option.active {
+        background-color: var(--primary);
+        color: white;
+        border-color: var(--primary);
+      }
+
+      .size-option:hover {
+        border-color: var(--primary);
+      }
+
+      .quick-view-quantity {
+        margin-bottom: 20px;
+      }
+
+      .quantity-title {
+        font-weight: 500;
+        margin-bottom: 10px;
+      }
+
+      .quantity-input {
+        display: flex;
+        width: 120px;
+        border: 1px solid var(--medium);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+      }
+
+      .quantity-btn {
+        width: 40px;
+        height: 40px;
+        background-color: var(--light);
+        border: none;
+        color: var(--primary);
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .quantity-btn:hover {
+        background-color: var(--medium);
+      }
+
+      .quantity-num {
+        flex: 1;
+        text-align: center;
+        border: none;
+        font-size: 16px;
+        padding: 0 10px;
+      }
+
+      .quick-view-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .quick-view-wishlist {
+        width: 50px;
+        height: 50px;
+        border: 1px solid var (--medium);
+        border-radius: var(--border-radius);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: var (--transition);
+      }
+
+      .quick-view-wishlist:hover {
+        background-color: var(--secondary);
+        color: white;
+        border-color: var(--secondary);
+      }
+
+      .quick-view-cart {
+        flex: 1;
+      }
+
+      /* Collection Banner */
+      .collection-banner {
+        padding: 80px 0;
+      }
+
+      .banner-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+      }
+
+      .banner-item {
+        position: relative;
+        height: 300px;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      .banner-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+      }
+
+      .banner-item:hover img {
+        transform: scale(1.1);
+      }
+
+      .banner-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 30px;
+        background: linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.7),
+          rgba(0, 0, 0, 0)
+        );
+        color: white;
+      }
+
+      .banner-subtitle {
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+      }
+
+      .banner-title {
+        font-family: "Playfair Display", serif;
+        font-size: 28px;
+        margin-bottom: 15px;
+        max-width: 70%;
+      }
+
+      .banner-item:hover .banner-btn {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .banner-btn {
+        opacity: 0;
+        transform: translateY(10px);
+        transition: var(--transition);
+        align-self: flex-start;
+      }
+
+      .banner-large {
+        grid-column: span 2;
+      }
+
+      /* Feature Section */
+      .features {
+        padding: 80px 0;
+        background-color: var(--light);
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+      }
+
+      .feature-item {
+        background-color: white;
+        border-radius: var(--border-radius);
+        padding: 30px;
+        text-align: center;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+      }
+
+      .feature-item:hover {
+        transform: translateY(-10px);
+      }
+
+      .feature-icon {
+        width: 70px;
+        height: 70px;
+        background-color: var(--light);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto 20px;
+        font-size: 30px;
+        color: var(--secondary);
+        transition: var(--transition);
+      }
+
+      .feature-item:hover .feature-icon {
+        background-color: var(--secondary);
+        color: white;
+      }
+
+      .feature-title {
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-size: 18px;
+        color: var(--primary);
+      }
+
+      .feature-text {
+        color: var(--text);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      /* Testimonials */
+      .testimonials {
+        padding: 80px 0;
+        position: relative;
+      }
+
+      .testimonial-container {
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      .testimonial-item {
+        text-align: center;
+        padding: 30px;
+        border-radius: var(--border-radius);
+        background-color: white;
+        box-shadow: var(--shadow);
+        margin: 30px 0;
+        position: relative;
+        opacity: 0;
+        display: none;
+        transition: opacity 0.5s ease;
+      }
+
+      .testimonial-item.active {
+        opacity: 1;
+        display: block;
+      }
+
+      .testimonial-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: -80px auto 20px;
+        border: 5px solid white;
+        box-shadow: var(--shadow);
+      }
+
+      .testimonial-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .testimonial-rating {
+        color: #ffc107;
+        margin-bottom: 15px;
+      }
+
+      .testimonial-text {
+        font-style: italic;
+        line-height: 1.8;
+        margin-bottom: 20px;
+        color: var(--text);
+        position: relative;
+      }
+
+      .testimonial-text:before,
+      .testimonial-text:after {
+        content: "\201C";
+        font-size: 60px;
+        color: var(--light);
+        position: absolute;
+        top: -20px;
+        left: -10px;
+        font-family: Georgia, serif;
+      }
+
+      .testimonial-text:after {
+        content: "\201D";
+        top: auto;
+        left: auto;
+        bottom: -40px;
+        right: -10px;
+      }
+
+      .testimonial-name {
+        font-weight: 600;
+        font-size: 18px;
+        color: var(--primary);
+        margin-bottom: 5px;
+      }
+
+      .testimonial-position {
+        color: var(--secondary);
+        font-size: 14px;
+      }
+
+      .testimonial-arrows {
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: space-between;
+        padding: 0 -20px;
+        z-index: 1;
+      }
+
+      .testimonial-arrow {
+        width: 50px;
+        height: 50px;
+        background-color: white;
+        border-radius: 50%;
+        box-shadow: var(--shadow);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--primary);
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .testimonial-arrow:hover {
+        background-color: var(--secondary);
+        color: white;
+      }
+
+      .testimonial-dots {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .testimonial-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: var(--medium);
+        margin: 0 5px;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .testimonial-dot.active {
+        background-color: var(--secondary);
+        transform: scale(1.2);
+      }
+
+      /* Instagram Gallery */
+      .instagram-gallery {
+        padding: 80px 0;
+        background-color: var(--light);
+      }
+
+      .instagram-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 10px;
+      }
+
+      .instagram-item {
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 1;
+      }
+
+      .instagram-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+      }
+
+      .instagram-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: var(--transition);
+      }
+
+      .instagram-icon {
+        color: white;
+        font-size: 30px;
+        transform: scale(0.5);
+        transition: var(--transition);
+      }
+
+      .instagram-item:hover img {
+        transform: scale(1.1);
+      }
+
+      .instagram-item:hover .instagram-overlay {
+        opacity: 1;
+      }
+
+      .instagram-item:hover .instagram-icon {
+        transform: scale(1);
+      }
+
+      /* Newsletter */
+      .newsletter {
+        padding: 80px 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .newsletter-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.7),
+            rgba(0, 0, 0, 0.7)
+          ),
+          url("https://cdn.pixabay.com/photo/2017/03/13/17/26/ecommerce-2140603_960_720.jpg");
+        background-size: cover;
+        background-position: center;
+        z-index: -1;
+      }
+
+      .newsletter-content {
+        color: white;
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .newsletter-title {
+        font-family: "Playfair Display", serif;
+        font-size: 36px;
+        margin-bottom: 15px;
+      }
+
+      .newsletter-text {
+        margin-bottom: 30px;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      .newsletter-form {
+        display: flex;
+        width: 100%;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .newsletter-input {
+        flex: 1;
+        border: none;
+        padding: 15px 20px;
+        font-size: 16px;
+        outline: none;
+      }
+
+      .newsletter-btn {
+        background-color: var(--secondary);
+        color: white;
+        border: none;
+        padding: 0 30px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .newsletter-btn:hover {
+        background-color: var(--primary);
+      }
+
+      /* Footer */
+      footer {
+        background-color: var(--primary);
+        color: white;
+        padding: 60px 0 0;
+      }
+
+      .footer-top {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 40px;
+      }
+
+      .footer-info p {
+        margin: 20px 0;
+        line-height: 1.6;
+        color: var(--medium);
+      }
+
+      .footer-social {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .footer-social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        transition: var(--transition);
+      }
+
+      .footer-social-link:hover {
+        background-color: var(--secondary);
+        transform: translateY(-3px);
+      }
+
+      .footer-title {
+        font-size: 18px;
+        margin-bottom: 25px;
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      .footer-title::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 30px;
+        height: 2px;
+        background-color: var(--secondary);
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 15px;
+      }
+
+      .footer-links a {
+        color: var(--medium);
+        text-decoration: none;
+        transition: var(--transition);
+        position: relative;
+        padding-left: 15px;
+      }
+
+      .footer-links a::before {
+        content: "\f105";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        position: absolute;
+        left: 0;
+        top: 2px;
+        color: var(--secondary);
+        transition: var(--transition);
+        opacity: 0;
+        transform: translateX(-5px);
+      }
+
+      .footer-links a:hover {
+        color: var(--secondary);
+        padding-left: 20px;
+      }
+
+      .footer-links a:hover::before {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .footer-contact {
+        list-style: none;
+      }
+
+      .footer-contact li {
+        margin-bottom: 15px;
+        color: var(--medium);
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .footer-contact-icon {
+        color: var(--secondary);
+        margin-right: 10px;
+        margin-top: 5px;
+      }
+
+      .footer-middle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .payment-methods {
+        display: flex;
+        gap: 10px;
+      }
+
+      .payment-method {
+        font-size: 30px;
+        color: var(--medium);
+        transition: var(--transition);
+      }
+
+      .payment-method:hover {
+        color: white;
+      }
+
+      .footer-app {
+        display: flex;
+        gap: 15px;
+      }
+
+      .app-btn {
+        display: flex;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: var(--border-radius);
+        padding: 10px 15px;
+        color: white;
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      .app-btn:hover {
+        background-color: var(--secondary);
+      }
+
+      .app-icon {
+        font-size: 24px;
+        margin-right: 10px;
+      }
+
+      .app-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+      }
+
+      .app-small {
+        font-size: 10px;
+        opacity: 0.8;
+      }
+
+      .app-name {
+        font-weight: 600;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding: 20px 0;
+        color: var(--medium);
+        font-size: 14px;
+      }
+
+      .footer-bottom a {
+        color: var(--medium);
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      .footer-bottom a:hover {
+        color: var(--secondary);
+      }
+
+      /* Back to Top */
+      .back-to-top {
+        position: fixed;
+        right: 30px;
+        bottom: 30px;
+        width: 50px;
+        height: 50px;
+        background-color: var(--secondary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+        z-index: 999;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .back-to-top.active {
+        opacity: 1;
+        visibility: visible;
+        bottom: 30px;
+      }
+
+      .back-to-top:hover {
+        background-color: var(--primary);
+        transform: translateY(-5px);
+      }
+
+      /* Toast */
+      .toast {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        background-color: white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-radius: var(--border-radius);
+        padding: 15px 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 9999;
+      }
+
+      .toast.active {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .toast-icon {
+        color: #2ecc71;
+        font-size: 20px;
+      }
+
+      .toast-message {
+        font-weight: 500;
+      }
+
+      .toast-close {
+        cursor: pointer;
+        margin-left: 10px;
+        font-size: 14px;
+        color: var(--text);
+        transition: var(--transition);
+      }
+
+      .toast-close:hover {
+        color: var(--primary);
+      }
+
+      /* Animation */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 1200px) {
+        .container {
+          padding: 0 30px;
+        }
+
+        .products-grid,
+        .categories-grid,
+        .features-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .instagram-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      @media (max-width: 992px) {
+        .hero-title {
+          font-size: 48px;
+        }
+
+        .products-grid,
+        .categories-grid,
+        .features-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .banner-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .banner-large {
+          grid-column: auto;
+        }
+
+        .instagram-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .footer-top {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .quick-view-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: block;
+        }
+
+        nav {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background-color: white;
+          box-shadow: var(--shadow);
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s ease;
+        }
+
+        nav.active {
+          max-height: 400px;
+        }
+
+        nav ul {
+          flex-direction: column;
+          padding: 20px;
+        }
+
+        nav ul li {
+          margin: 10px 0;
+        }
+
+        .dropdown-container:hover .dropdown-menu,
+        .dropdown-container:hover .mega-menu {
+          display: none;
+        }
+
+        .hero-title {
+          font-size: 36px;
+        }
+
+        .hero-subtitle,
+        .hero-description {
+          font-size: 16px;
+        }
+
+        .instagram-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .footer-middle {
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .footer-app {
+          margin-top: 20px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .products-grid,
+        .categories-grid,
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .trending-tabs {
+          flex-wrap: wrap;
+        }
+
+        .hero {
+          height: 500px;
+        }
+
+        .footer-top {
+          grid-template-columns: 1fr;
+        }
+
+        .section-spacing {
+          padding: 60px 0;
+        }
+
+        .section-heading {
+          font-size: 30px;
+        }
+
+        .instagram-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="announcement-bar">
+      <div class="container">
+        <p>
+          Willkommen bei ModeNest! Entdecken Sie die neuesten Trends und
+          Angebote.
+        </p>
+        <div class="announcement-indicators">
+          <div class="indicator active"></div>
+          <div class="indicator"></div>
+          <div class="indicator"></div>
+        </div>
+      </div>
+    </div>
+
+    <header id="header">
+      <div class="container header-container">
+        <div class="logo">
+          <img src="logo.png" alt="ModeNest Logo" />
+          Mode<span>Nest</span>
+        </div>
+        <nav id="nav">
+          <ul>
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="collections.html">Kollektionen</a></li>
+            <li><a href="about.html">Über uns</a></li>
+            <li><a href="contact.html">Kontakt</a></li>
+            <li class="dropdown-container">
+              <a href="#">Mehr</a>
+              <ul class="dropdown-menu">
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="faqs.html">FAQs</a></li>
+                <li><a href="size-guide.html">Größentabelle</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="header-icons">
+          <div class="search-container">
+            <i class="fas fa-search header-icon" id="search-toggle"></i>
+            <div class="search-input" id="search-input">
+              <form class="search-form">
+                <input
+                  type="text"
+                  placeholder="Suche nach Produkten..."
+                  aria-label="Search"
+                />
+                <button type="submit"><i class="fas fa-search"></i></button>
+              </form>
+            </div>
+          </div>
+          <a href="#" class="header-icon cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">3</span>
+          </a>
+          <a href="#" class="header-icon wishlist-icon">
+            <i class="fas fa-heart"></i>
+            <span class="cart-count">0</span>
+          </a>
+          <div class="menu-toggle" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="hero">
+      <div class="hero-slide hero-slide-1 active">
+        <div class="container">
+          <div class="hero-content">
+            <h2 class="hero-subtitle">Neue Kollektion</h2>
+            <h1 class="hero-title">Entdecken Sie die neuesten Trends</h1>
+            <p class="hero-description">
+              ModeNest bietet Ihnen die neuesten Trends und zeitlose Klassiker.
+              Entdecken Sie unsere Kollektionen und finden Sie Ihr neues
+              Lieblingsoutfit.
+            </p>
+            <a href="#" class="btn btn-primary hero-btn">Jetzt einkaufen</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-slide hero-slide-2">
+        <div class="container">
+          <div class="hero-content">
+            <h2 class="hero-subtitle">Sommer Sale</h2>
+            <h1 class="hero-title">Bis zu 50% Rabatt</h1>
+            <p class="hero-description">
+              Verpassen Sie nicht unsere exklusiven Angebote und Rabatte. Jetzt
+              einkaufen und sparen!
+            </p>
+            <a href="#" class="btn btn-primary hero-btn">Jetzt einkaufen</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-slide hero-slide-3">
+        <div class="container">
+          <div class="hero-content">
+            <h2 class="hero-subtitle">Exklusive Kollektion</h2>
+            <h1 class="hero-title">Nur bei ModeNest</h1>
+            <p class="hero-description">
+              Entdecken Sie unsere exklusiven Kollektionen, die Sie nur bei
+              ModeNest finden. Stilvoll und einzigartig.
+            </p>
+            <a href="#" class="btn btn-primary hero-btn">Jetzt einkaufen</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-navigation">
+        <div class="hero-dot active"></div>
+        <div class="hero-dot"></div>
+        <div class="hero-dot"></div>
+      </div>
+      <div class="hero-arrows">
+        <div class="hero-arrow hero-prev">
+          <i class="fas fa-chevron-left"></i>
+        </div>
+        <div class="hero-arrow hero-next">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+    </div>
+
+    <section class="categories section-spacing">
+      <div class="container">
+        <div class="section-title">
+          <h2 class="section-subtitle">Kategorien</h2>
+          <h3 class="section-heading">Entdecken Sie unsere Kategorien</h3>
+          <p class="section-description">
+            ModeNest bietet eine breite Auswahl an Kategorien, um Ihren Stil zu
+            vervollständigen. Stöbern Sie durch unsere Kollektionen und finden
+            Sie das perfekte Outfit.
+          </p>
+        </div>
+        <div class="categories-grid">
+          <div class="category-card">
+            <img
+              src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+              alt="Damenmode"
+            />
+            <div class="overlay">
+              <h3>Damenmode</h3>
+              <p>Stilvolle und trendige Kleidung für Damen</p>
+              <a href="#" class="btn btn-outline">Jetzt einkaufen</a>
+            </div>
+          </div>
+          <div class="category-card">
+            <img
+              src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+              alt="Herrenmode"
+            />
+            <div class="overlay">
+              <h3>Herrenmode</h3>
+              <p>Elegante und moderne Kleidung für Herren</p>
+              <a href="#" class="btn btn-outline">Jetzt einkaufen</a>
+            </div>
+          </div>
+          <div class="category-card">
+            <img
+              src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+              alt="Kinderkleidung"
+            />
+            <div class="overlay">
+              <h3>Kinderkleidung</h3>
+              <p>Bequeme und niedliche Kleidung für Kinder</p>
+              <a href="#" class="btn btn-outline">Jetzt einkaufen</a>
+            </div>
+          </div>
+          <div class="category-card">
+            <img
+              src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+              alt="Accessoires"
+            />
+            <div class="overlay">
+              <h3>Accessoires</h3>
+              <p>Vervollständigen Sie Ihren Look mit unseren Accessoires</p>
+              <a href="#" class="btn btn-outline">Jetzt einkaufen</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trending section-spacing">
+      <div class="container">
+        <div class="section-title">
+          <h2 class="section-subtitle">Im Trend</h2>
+          <h3 class="section-heading">Beliebte Produkte</h3>
+          <p class="section-description">
+            Entdecken Sie die beliebtesten Produkte bei ModeNest. Diese Artikel
+            sind bei unseren Kunden besonders gefragt.
+          </p>
+        </div>
+        <div class="trending-tabs">
+          <button class="trending-tab active" data-tab="tab-1">
+            Neuheiten
+          </button>
+          <button class="trending-tab" data-tab="tab-2">Bestseller</button>
+          <button class="trending-tab" data-tab="tab-3">Angebote</button>
+        </div>
+        <div class="trending-content active" id="tab-1">
+          <div class="products-grid">
+            <div class="product-card">
+              <div class="product-img">
+                <img
+                  src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+                  alt="Produkt 1"
+                />
+                <div class="product-badges">
+                  <span class="product-badge badge-new">Neu</span>
+                </div>
+                <div class="product-actions">
+                  <button class="product-action-btn add-to-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                  <button class="product-action-btn wishlist-btn">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                  <button class="product-action-btn quick-view-btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="product-info">
+                <span class="product-category">Damenmode</span>
+                <a href="#" class="product-title">Produkt 1</a>
+                <div class="product-rating">
+                  <div class="rating-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="rating-count">(124)</span>
+                </div>
+                <div class="product-price">
+                  <span class="current-price">$29.99</span>
+                  <span class="old-price">$39.99</span>
+                </div>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-img">
+                <img
+                  src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+                  alt="Produkt 2"
+                />
+                <div class="product-badges">
+                  <span class="product-badge badge-new">Neu</span>
+                </div>
+                <div class="product-actions">
+                  <button class="product-action-btn add-to-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                  <button class="product-action-btn wishlist-btn">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                  <button class="product-action-btn quick-view-btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="product-info">
+                <span class="product-category">Herrenmode</span>
+                <a href="#" class="product-title">Produkt 2</a>
+                <div class="product-rating">
+                  <div class="rating-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="rating-count">(98)</span>
+                </div>
+                <div class="product-price">
+                  <span class="current-price">$49.99</span>
+                  <span class="old-price">$59.99</span>
+                </div>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-img">
+                <img
+                  src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+                  alt="Produkt 3"
+                />
+                <div class="product-badges">
+                  <span class="product-badge badge-new">Neu</span>
+                </div>
+                <div class="product-actions">
+                  <button class="product-action-btn add-to-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                  <button class="product-action-btn wishlist-btn">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                  <button class="product-action-btn quick-view-btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="product-info">
+                <span class="product-category">Kinderkleidung</span>
+                <a href="#" class="product-title">Produkt 3</a>
+                <div class="product-rating">
+                  <div class="rating-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="rating-count">(76)</span>
+                </div>
+                <div class="product-price">
+                  <span class="current-price">$19.99</span>
+                  <span class="old-price">$29.99</span>
+                </div>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-img">
+                <img
+                  src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+                  alt="Produkt 4"
+                />
+                <div class="product-badges">
+                  <span class="product-badge badge-new">Neu</span>
+                </div>
+                <div class="product-actions">
+                  <button class="product-action-btn add-to-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                  <button class="product-action-btn wishlist-btn">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                  <button class="product-action-btn quick-view-btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="product-info">
+                <span class="product-category">Accessoires</span>
+                <a href="#" class="product-title">Produkt 4</a>
+                <div class="product-rating">
+                  <div class="rating-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="rating-count">(54)</span>
+                </div>
+                <div class="product-price">
+                  <span class="current-price">$9.99</span>
+                  <span class="old-price">$14.99</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="trending-content" id="tab-2">
+          <div class="products-grid">
+            <div class="product-card">
+              <div class="product-img">
+                <img
+                  src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+                  alt="Produkt 5"
+                />
+                <div class="product-badges">
+                  <span class="product-badge badge-hot">Bestseller</span>
+                </div>
+                <div class="product-actions">
+                  <button class="product-action-btn add-to-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                  <button class="product-action-btn wishlist-btn">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                  <button class="product-action-btn quick-view-btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="product-info">
+                <span class="product-category">Damenmode</span>
+                <a href="#" class="product-title">Produkt 5</a>
+                <div class="product-rating">
+                  <div class="rating-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="rating-count">(200)</span>
+                </div>
+                <div class="product-price">
+                  <span class="current-price">$39.99</span>
+                  <span class="old-price">$49.99</span>
+                </div>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-img">
+                <img
+                  src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+                  alt="Produkt 6"
+                />
+                <div class="product-badges">
+                  <span class="product-badge badge-hot">Bestseller</span>
+                </div>
+                <div class="product-actions">
+                  <button class="product-action-btn add-to-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                  <button class="product-action-btn wishlist-btn">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                  <button class="product-action-btn quick-view-btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="product-info">
+                <span class="product-category">Herrenmode</span>
+                <a href="#" class="product-title">Produkt 6</a>
+                <div class="product-rating">
+                  <div class="rating-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="rating-count">(180)</span>
+                </div>
+                <div class="product-price">
+                  <span class="current-price">$59.99</span>
+                  <span class="old-price">$69.99</span>
+                </div>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-img">
+                <img
+                  src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+                  alt="Produkt 7"
+                />
+                <div class="product-badges">
+                  <span class="product-badge badge-hot">Bestseller</span>
+                </div>
+                <div class="product-actions">
+                  <button class="product-action-btn add-to-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                  <button class="product-action-btn wishlist-btn">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                  <button class="product-action-btn quick-view-btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="product-info">
+                <span class="product-category">Kinderkleidung</span>
+                <a href="#" class="product-title">Produkt 7</a>
+                <div class="product-rating">
+                  <div class="rating-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="rating-count">(150)</span>
+                </div>
+                <div class="product-price">
+                  <span class="current-price">$24.99</span>
+                  <span class="old-price">$34.99</span>
+                </div>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-img">
+                <img
+                  src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+                  alt="Produkt 8"
+                />
+                <div class="product-badges">
+                  <span class="product-badge badge-hot">Bestseller</span>
+                </div>
+                <div class="product-actions">
+                  <button class="product-action-btn add-to-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                  <button class="product-action-btn wishlist-btn">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                  <button class="product-action-btn quick-view-btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="product-info">
+                <span class="product-category">Accessoires</span>
+                <a href="#" class="product-title">Produkt 8</a>
+                <div class="product-rating">
+                  <div class="rating-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="rating-count">(120)</span>
+                </div>
+                <div class="product-price">
+                  <span class="current-price">$14.99</span>
+                  <span class="old-price">$19.99</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="trending-content" id="tab-3">
+          <div class="products-grid">
+            <div class="product-card">
+              <div class="product-img">
+                <img
+                  src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+                  alt="Produkt 9"
+                />
+                <div class="product-badges">
+                  <span class="product-badge badge-sale">Angebot</span>
+                </div>
+                <div class="product-actions">
+                  <button class="product-action-btn add-to-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                  <button class="product-action-btn wishlist-btn">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                  <button class="product-action-btn quick-view-btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="product-info">
+                <span class="product-category">Damenmode</span>
+                <a href="#" class="product-title">Produkt 9</a>
+                <div class="product-rating">
+                  <div class="rating-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="rating-count">(100)</span>
+                </div>
+                <div class="product-price">
+                  <span class="current-price">$19.99</span>
+                  <span class="old-price">$29.99</span>
+                </div>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-img">
+                <img
+                  src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+                  alt="Produkt 10"
+                />
+                <div class="product-badges">
+                  <span class="product-badge badge-sale">Angebot</span>
+                </div>
+                <div class="product-actions">
+                  <button class="product-action-btn add-to-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                  <button class="product-action-btn wishlist-btn">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                  <button class="product-action-btn quick-view-btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="product-info">
+                <span class="product-category">Herrenmode</span>
+                <a href="#" class="product-title">Produkt 10</a>
+                <div class="product-rating">
+                  <div class="rating-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="rating-count">(90)</span>
+                </div>
+                <div class="product-price">
+                  <span class="current-price">$29.99</span>
+                  <span class="old-price">$39.99</span>
+                </div>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-img">
+                <img
+                  src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+                  alt="Produkt 11"
+                />
+                <div class="product-badges">
+                  <span class="product-badge badge-sale">Angebot</span>
+                </div>
+                <div class="product-actions">
+                  <button class="product-action-btn add-to-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                  <button class="product-action-btn wishlist-btn">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                  <button class="product-action-btn quick-view-btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="product-info">
+                <span class="product-category">Kinderkleidung</span>
+                <a href="#" class="product-title">Produkt 11</a>
+                <div class="product-rating">
+                  <div class="rating-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="rating-count">(80)</span>
+                </div>
+                <div class="product-price">
+                  <span class="current-price">$14.99</span>
+                  <span class="old-price">$19.99</span>
+                </div>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-img">
+                <img
+                  src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+                  alt="Produkt 12"
+                />
+                <div class="product-badges">
+                  <span class="product-badge badge-sale">Angebot</span>
+                </div>
+                <div class="product-actions">
+                  <button class="product-action-btn add-to-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                  <button class="product-action-btn wishlist-btn">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                  <button class="product-action-btn quick-view-btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="product-info">
+                <span class="product-category">Accessoires</span>
+                <a href="#" class="product-title">Produkt 12</a>
+                <div class="product-rating">
+                  <div class="rating-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="rating-count">(70)</span>
+                </div>
+                <div class="product-price">
+                  <span class="current-price">$4.99</span>
+                  <span class="old-price">$9.99</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collection-banner section-spacing">
+      <div class="container">
+        <div class="banner-grid">
+          <div class="banner-item">
+            <img
+              src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+              alt="Kollektion 1"
+            />
+            <div class="banner-content">
+              <span class="banner-subtitle">Neue Kollektion</span>
+              <h2 class="banner-title">Frühjahr/Sommer 2025</h2>
+              <a href="#" class="btn btn-outline banner-btn">Jetzt einkaufen</a>
+            </div>
+          </div>
+          <div class="banner-item">
+            <img
+              src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+              alt="Kollektion 2"
+            />
+            <div class="banner-content">
+              <span class="banner-subtitle">Exklusiv</span>
+              <h2 class="banner-title">Designer Kollektion</h2>
+              <a href="#" class="btn btn-outline banner-btn">Jetzt einkaufen</a>
+            </div>
+          </div>
+          <div class="banner-item banner-large">
+            <img
+              src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+              alt="Kollektion 3"
+            />
+            <div class="banner-content">
+              <span class="banner-subtitle">Sale</span>
+              <h2 class="banner-title">Bis zu 50% Rabatt</h2>
+              <a href="#" class="btn btn-outline banner-btn">Jetzt einkaufen</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features section-spacing">
+      <div class="container">
+        <div class="section-title">
+          <h2 class="section-subtitle">Unsere Vorteile</h2>
+          <h3 class="section-heading">Warum ModeNest?</h3>
+          <p class="section-description">
+            ModeNest bietet Ihnen nicht nur hochwertige Mode, sondern auch
+            zahlreiche Vorteile, die Ihr Einkaufserlebnis verbessern.
+          </p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-shipping-fast"></i>
+            </div>
+            <h3 class="feature-title">Kostenloser Versand</h3>
+            <p class="feature-text">
+              Genießen Sie kostenlosen Versand bei Bestellungen über 50€.
+            </p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-undo-alt"></i>
+            </div>
+            <h3 class="feature-title">Einfache Rückgabe</h3>
+            <p class="feature-text">
+              Unzufrieden mit Ihrem Kauf? Kein Problem! Einfache Rückgabe
+              innerhalb von 30 Tagen.
+            </p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-headset"></i>
+            </div>
+            <h3 class="feature-title">24/7 Kundenservice</h3>
+            <p class="feature-text">
+              Unser Kundenservice steht Ihnen rund um die Uhr zur Verfügung.
+            </p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-lock"></i>
+            </div>
+            <h3 class="feature-title">Sichere Zahlung</h3>
+            <p class="feature-text">
+              Ihre Daten sind bei uns sicher. Wir bieten sichere
+              Zahlungsmethoden an.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="testimonials section-spacing">
+      <div class="container">
+        <div class="section-title">
+          <h2 class="section-subtitle">Kundenbewertungen</h2>
+          <h3 class="section-heading">Was unsere Kunden sagen</h3>
+          <p class="section-description">
+            Lesen Sie, was unsere zufriedenen Kunden über ihre Erfahrungen mit
+            ModeNest zu sagen haben.
+          </p>
+        </div>
+        <div class="testimonial-container">
+          <div class="testimonial-item active">
+            <div class="testimonial-avatar">
+              <img
+                src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+                alt="Kunde 1"
+              />
+            </div>
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <p class="testimonial-text">
+              "ModeNest bietet eine großartige Auswahl an stilvoller Kleidung.
+              Der Kundenservice ist hervorragend und die Lieferung war schnell.
+              Ich bin sehr zufrieden mit meinem Einkauf!"
+            </p>
+            <h4 class="testimonial-name">Anna Müller</h4>
+            <span class="testimonial-position">Berlin, Deutschland</span>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-avatar">
+              <img
+                src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+                alt="Kunde 2"
+              />
+            </div>
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <p class="testimonial-text">
+              "Ich liebe die Qualität der Kleidung bei ModeNest. Die Preise sind
+              fair und die Auswahl ist großartig. Ich werde definitiv wieder
+              hier einkaufen."
+            </p>
+            <h4 class="testimonial-name">Maximilian Schmidt</h4>
+            <span class="testimonial-position">Hamburg, Deutschland</span>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-avatar">
+              <img
+                src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+                alt="Kunde 3"
+              />
+            </div>
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <p class="testimonial-text">
+              "ModeNest hat meine Erwartungen übertroffen. Die Kleidung ist
+              stilvoll und von hoher Qualität. Der Versand war schnell und die
+              Verpackung war sehr ansprechend."
+            </p>
+            <h4 class="testimonial-name">Sophie Wagner</h4>
+            <span class="testimonial-position">München, Deutschland</span>
+          </div>
+        </div>
+        <div class="testimonial-arrows">
+          <div class="testimonial-arrow testimonial-prev">
+            <i class="fas fa-chevron-left"></i>
+          </div>
+          <div class="testimonial-arrow testimonial-next">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
+        <div class="testimonial-dots">
+          <div class="testimonial-dot active"></div>
+          <div class="testimonial-dot"></div>
+          <div class="testimonial-dot"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="instagram-gallery section-spacing">
+      <div class="container">
+        <div class="section-title">
+          <h2 class="section-subtitle">Instagram</h2>
+          <h3 class="section-heading">Folgen Sie uns auf Instagram</h3>
+          <p class="section-description">
+            Entdecken Sie die neuesten Trends und Inspirationen auf unserem
+            Instagram-Kanal. Folgen Sie uns für exklusive Einblicke und
+            Angebote.
+          </p>
+        </div>
+        <div class="instagram-grid">
+          <div class="instagram-item">
+            <img
+              src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+              alt="Instagram 1"
+            />
+            <div class="instagram-overlay">
+              <i class="fab fa-instagram instagram-icon"></i>
+            </div>
+          </div>
+          <div class="instagram-item">
+            <img
+              src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+              alt="Instagram 2"
+            />
+            <div class="instagram-overlay">
+              <i class="fab fa-instagram instagram-icon"></i>
+            </div>
+          </div>
+          <div class="instagram-item">
+            <img
+              src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+              alt="Instagram 3"
+            />
+            <div class="instagram-overlay">
+              <i class="fab fa-instagram instagram-icon"></i>
+            </div>
+          </div>
+          <div class="instagram-item">
+            <img
+              src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+              alt="Instagram 4"
+            />
+            <div class="instagram-overlay">
+              <i class="fab fa-instagram instagram-icon"></i>
+            </div>
+          </div>
+          <div class="instagram-item">
+            <img
+              src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+              alt="Instagram 5"
+            />
+            <div class="instagram-overlay">
+              <i class="fab fa-instagram instagram-icon"></i>
+            </div>
+          </div>
+          <div class="instagram-item">
+            <img
+              src="https://cdn.pixabay.com/photo/2016/11/23/00/34/clothes-1850804_960_720.jpg"
+              alt="Instagram 6"
+            />
+            <div class="instagram-overlay">
+              <i class="fab fa-instagram instagram-icon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="newsletter section-spacing">
+      <div class="newsletter-bg"></div>
+      <div class="container">
+        <div class="newsletter-content">
+          <h2 class="newsletter-title">Abonnieren Sie unseren Newsletter</h2>
+          <p class="newsletter-text">
+            Bleiben Sie auf dem Laufenden über die neuesten Trends, Angebote und
+            exklusiven Rabatte. Abonnieren Sie unseren Newsletter und verpassen
+            Sie keine Neuigkeiten mehr.
+          </p>
+          <form class="newsletter-form">
+            <input
+              type="email"
+              class="newsletter-input"
+              placeholder="Ihre E-Mail-Adresse"
+              required
+            />
+            <button type="submit" class="newsletter-btn">Abonnieren</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-info">
+            <div class="logo">
+              <span>Mode<span>Nest</span></span>
+              <i
+                class="fas fa-tshirt"
+                style="
+                  margin-left: 10px;
+                  color: var(--secondary);
+                  font-size: 24px;
+                "
+              ></i>
+            </div>
+            <p>
+              ModeNest ist ein Premium-Modehändler, der sorgfältig kuratierte
+              Kollektionen hochwertiger Kleidung und Accessoires für den
+              modernen Menschen anbietet.
+            </p>
+            <div class="footer-social">
+              <a href="#" class="footer-social-link" title="Facebook"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" class="footer-social-link" title="Twitter"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="#" class="footer-social-link" title="Instagram"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" class="footer-social-link" title="Pinterest"
+                ><i class="fab fa-pinterest"></i
+              ></a>
+              <a href="#" class="footer-social-link" title="YouTube"
+                ><i class="fab fa-youtube"></i
+              ></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h3 class="footer-title">Schnelllinks</h3>
+            <ul class="footer-links">
+              <li><a href="#">Shop</a></li>
+              <li><a href="#">Kollektionen</a></li>
+              <li><a href="#">Neue Artikel</a></li>
+              <li><a href="#">Sale</a></li>
+              <li><a href="#">Über uns</a></li>
+              <li><a href="#">Kontakt</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3 class="footer-title">Kundenservice</h3>
+            <ul class="footer-links">
+              <li><a href="#">Mein Konto</a></li>
+              <li><a href="#">Bestellung verfolgen</a></li>
+              <li><a href="#">Versandrichtlinien</a></li>
+              <li><a href="#">Rückgabe & Umtausch</a></li>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">Größentabelle</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3 class="footer-title">Kontakt</h3>
+            <ul class="footer-contact">
+              <li>
+                <i class="fas fa-map-marker-alt footer-contact-icon"></i>
+                Modestraße 123, 10115 Berlin
+              </li>
+              <li>
+                <i class="fas fa-phone footer-contact-icon"></i>
+                +49 (0) 30 123 4567
+              </li>
+              <li>
+                <i class="fas fa-envelope footer-contact-icon"></i>
+                info@modenest.de
+              </li>
+              <li>
+                <i class="fas fa-clock footer-contact-icon"></i>
+                Mo - Sa: 9:00 - 18:00 Uhr
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-middle">
+          <div class="payment-methods">
+            <span class="payment-method"><i class="fab fa-cc-visa"></i></span>
+            <span class="payment-method"
+              ><i class="fab fa-cc-mastercard"></i
+            ></span>
+            <span class="payment-method"><i class="fab fa-cc-amex"></i></span>
+            <span class="payment-method"><i class="fab fa-cc-paypal"></i></span>
+            <span class="payment-method"><i class="fab fa-apple-pay"></i></span>
+            <span class="payment-method"
+              ><i class="fab fa-google-pay"></i
+            ></span>
+          </div>
+          <div class="footer-app">
+            <a href="#" class="app-btn">
+              <i class="fab fa-apple app-icon"></i>
+              <div class="app-text">
+                <span class="app-small">Download on the</span>
+                <span class="app-name">App Store</span>
+              </div>
+            </a>
+            <a href="#" class="app-btn">
+              <i class="fab fa-google-play app-icon"></i>
+              <div class="app-text">
+                <span class="app-small">Get it on</span>
+                <span class="app-name">Google Play</span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 ModeNest. All Rights Reserved. |
+            <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <div class="back-to-top" id="back-to-top">
+      <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <!-- Toast Message -->
+    <div class="toast" id="toast">
+      <i class="fas fa-check-circle toast-icon"></i>
+      <span class="toast-message">Product added to cart successfully!</span>
+      <i class="fas fa-times toast-close" id="toast-close"></i>
+    </div>
+
+    <!-- Quick View Modal -->
+    <div class="quick-view-modal" id="quick-view-modal">
+      <div class="quick-view-content">
+        <div class="quick-view-close" id="quick-view-close">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="quick-view-grid">
+          <div class="quick-view-gallery">
+            <img
+              src="https://cdn.pixabay.com/photo/2016/11/23/06/57/isolated-t-shirt-1852114_960_720.png"
+              alt="Product"
+              class="quick-view-img"
+              id="quick-view-img"
+            />
+            <div class="quick-view-thumbs">
+              <div class="quick-view-thumb active">
+                <img
+                  src="https://cdn.pixabay.com/photo/2016/11/23/06/57/isolated-t-shirt-1852114_960_720.png"
+                  alt="Thumb 1"
+                />
+              </div>
+              <div class="quick-view-thumb">
+                <img
+                  src="https://cdn.pixabay.com/photo/2019/10/27/06/19/shirt-4580687_960_720.png"
+                  alt="Thumb 2"
+                />
+              </div>
+              <div class="quick-view-thumb">
+                <img
+                  src="https://cdn.pixabay.com/photo/2016/12/06/09/30/blank-1886001_960_720.png"
+                  alt="Thumb 3"
+                />
+              </div>
+              <div class="quick-view-thumb">
+                <img
+                  src="https://cdn.pixabay.com/photo/2016/11/23/06/57/isolated-t-shirt-1852113_960_720.png"
+                  alt="Thumb 4"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="quick-view-details">
+            <h2 id="quick-view-title">Product Title</h2>
+            <div class="quick-view-price">
+              <span class="quick-view-current" id="quick-view-price"
+                >$29.99</span
+              >
+              <span class="quick-view-old" id="quick-view-old-price"
+                >$39.99</span
+              >
+            </div>
+            <div class="quick-view-rating">
+              <div class="quick-view-stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+              <span class="quick-view-count">(124 reviews)</span>
+            </div>
+            <p class="quick-view-description">
+              Experience ultimate comfort with our premium cotton t-shirt. Made
+              from 100% organic cotton, this shirt features a classic fit with
+              modern styling. Perfect for everyday wear or layering.
+            </p>
+            <div class="quick-view-colors">
+              <h4 class="color-title">Color:</h4>
+              <div class="color-options">
+                <div
+                  class="color-option color-black active"
+                  data-color="black"
+                ></div>
+                <div class="color-option color-blue" data-color="blue"></div>
+                <div class="color-option color-red" data-color="red"></div>
+                <div class="color-option color-green" data-color="green"></div>
+              </div>
+            </div>
+            <div class="quick-view-sizes">
+              <h4 class="size-title">Size:</h4>
+              <div class="size-options">
+                <button class="size-option">XS</button>
+                <button class="size-option">S</button>
+                <button class="size-option active">M</button>
+                <button class="size-option">L</button>
+                <button class="size-option">XL</button>
+              </div>
+            </div>
+            <div class="quick-view-quantity">
+              <h4 class="quantity-title">Quantity:</h4>
+              <div class="quantity-input">
+                <button class="quantity-btn" id="quantity-minus">-</button>
+                <input
+                  type="number"
+                  class="quantity-num"
+                  value="1"
+                  min="1"
+                  max="10"
+                  id="quantity-input"
+                />
+                <button class="quantity-btn" id="quantity-plus">+</button>
+              </div>
+            </div>
+            <div class="quick-view-actions">
+              <button
+                class="btn btn-primary quick-view-cart"
+                id="quick-add-to-cart"
+              >
+                <i class="fas fa-shopping-cart"></i> Add to Cart
+              </button>
+              <button class="quick-view-wishlist" title="Add to Wishlist">
+                <i class="fas fa-heart"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Loader
+      window.addEventListener("load", () => {
+        const loader = document.getElementById("loader");
+        loader.classList.add("hidden");
+      });
+
+      // Mobile menu toggle
+      const menuToggle = document.getElementById("menu-toggle");
+      const nav = document.getElementById("nav");
+
+      menuToggle.addEventListener("click", () => {
+        nav.classList.toggle("active");
+        menuToggle.innerHTML = nav.classList.contains("active")
+          ? '<i class="fas fa-times"></i>'
+          : '<i class="fas fa-bars"></i>';
+      });
+
+      // Search toggle
+      const searchToggle = document.getElementById("search-toggle");
+      const searchInput = document.getElementById("search-input");
+
+      searchToggle.addEventListener("click", () => {
+        searchInput.classList.toggle("active");
+      });
+
+      // Close search when clicking outside
+      document.addEventListener("click", (e) => {
+        if (
+          !searchToggle.contains(e.target) &&
+          !searchInput.contains(e.target)
+        ) {
+          searchInput.classList.remove("active");
+        }
+      });
+
+      // Hero slider
+      const heroSlides = document.querySelectorAll(".hero-slide");
+      const heroDots = document.querySelectorAll(".hero-dot");
+      const heroPrev = document.querySelector(".hero-prev");
+      const heroNext = document.querySelector(".hero-next");
+      let currentSlide = 0;
+      let slideInterval;
+
+      function showSlide(index) {
+        heroSlides.forEach((slide) => slide.classList.remove("active"));
+        heroDots.forEach((dot) => dot.classList.remove("active"));
+
+        heroSlides[index].classList.add("active");
+        heroDots[index].classList.add("active");
+        currentSlide = index;
+      }
+
+      function nextSlide() {
+        let next = (currentSlide + 1) % heroSlides.length;
+        showSlide(next);
+      }
+
+      function prevSlide() {
+        let prev = (currentSlide - 1 + heroSlides.length) % heroSlides.length;
+        showSlide(prev);
+      }
+
+      // Auto play slider
+      function startSlider() {
+        slideInterval = setInterval(nextSlide, 5000);
+      }
+
+      function stopSlider() {
+        clearInterval(slideInterval);
+      }
+
+      startSlider();
+
+      heroPrev.addEventListener("click", () => {
+        prevSlide();
+        stopSlider();
+        startSlider();
+      });
+
+      heroNext.addEventListener("click", () => {
+        nextSlide();
+        stopSlider();
+        startSlider();
+      });
+
+      heroDots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          showSlide(index);
+          stopSlider();
+          startSlider();
+        });
+      });
+
+      // Trending tabs
+      const trendingTabs = document.querySelectorAll(".trending-tab");
+      const trendingContents = document.querySelectorAll(".trending-content");
+
+      trendingTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const tabId = tab.getAttribute("data-tab");
+
+          trendingTabs.forEach((t) => t.classList.remove("active"));
+          trendingContents.forEach((content) =>
+            content.classList.remove("active")
+          );
+
+          tab.classList.add("active");
+          document.getElementById(tabId).classList.add("active");
+        });
+      });
+
+      // Quick view modal
+      const quickViewModal = document.getElementById("quick-view-modal");
+      const quickViewBtns = document.querySelectorAll(".quick-view-btn");
+      const quickViewClose = document.getElementById("quick-view-close");
+
+      quickViewBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          quickViewModal.classList.add("active");
+          document.body.style.overflow = "hidden";
+        });
+      });
+
+      quickViewClose.addEventListener("click", () => {
+        quickViewModal.classList.remove("active");
+        document.body.style.overflow = "";
+      });
+
+      quickViewModal.addEventListener("click", (e) => {
+        if (e.target === quickViewModal) {
+          quickViewModal.classList.remove("active");
+          document.body.style.overflow = "";
+        }
+      });
+
+      // Quick view gallery thumbnails
+      const quickViewThumbs = document.querySelectorAll(".quick-view-thumb");
+      const quickViewImg = document.getElementById("quick-view-img");
+
+      quickViewThumbs.forEach((thumb) => {
+        thumb.addEventListener("click", () => {
+          quickViewThumbs.forEach((t) => t.classList.remove("active"));
+          thumb.classList.add("active");
+
+          const imgSrc = thumb.querySelector("img").src;
+          quickViewImg.src = imgSrc.replace("/80/80", "/400/400");
+        });
+      });
+
+      // Color options
+      const colorOptions = document.querySelectorAll(".color-option");
+
+      colorOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          colorOptions.forEach((opt) => opt.classList.remove("active"));
+          option.classList.add("active");
+        });
+      });
+
+      // Size options
+      const sizeOptions = document.querySelectorAll(".size-option");
+
+      sizeOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          sizeOptions.forEach((opt) => opt.classList.remove("active"));
+          option.classList.add("active");
+        });
+      });
+
+      // Quantity input
+      const quantityMinus = document.getElementById("quantity-minus");
+      const quantityPlus = document.getElementById("quantity-plus");
+      const quantityInput = document.getElementById("quantity-input");
+
+      quantityMinus.addEventListener("click", () => {
+        const currentValue = parseInt(quantityInput.value);
+        if (currentValue > 1) {
+          quantityInput.value = currentValue - 1;
+        }
+      });
+
+      quantityPlus.addEventListener("click", () => {
+        const currentValue = parseInt(quantityInput.value);
+        if (currentValue < 10) {
+          quantityInput.value = currentValue + 1;
+        }
+      });
+
+      // Toast functionality
+      const toast = document.getElementById("toast");
+      const toastClose = document.getElementById("toast-close");
+
+      function showToast(message) {
+        toast.querySelector(".toast-message").textContent = message;
+        toast.classList.add("active");
+
+        setTimeout(() => {
+          toast.classList.remove("active");
+        }, 3000);
+      }
+
+      toastClose.addEventListener("click", () => {
+        toast.classList.remove("active");
+      });
+
+      // Cart functionality
+      const cartIcon = document.querySelector(".cart-icon");
+      const cartCount = cartIcon.querySelector(".cart-count");
+      let cartItems = 3;
+
+      function updateCartCount() {
+        cartCount.textContent = cartItems;
+      }
+
+      // Add to cart buttons
+      const addToCartBtns = document.querySelectorAll(".add-to-cart");
+      const quickAddToCart = document.getElementById("quick-add-to-cart");
+
+      addToCartBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          cartItems++;
+          updateCartCount();
+          showToast("Product added to cart successfully!");
+        });
+      });
+
+      quickAddToCart.addEventListener("click", () => {
+        const quantity = parseInt(quantityInput.value);
+        cartItems += quantity;
+        updateCartCount();
+        showToast(`${quantity} item(s) added to cart successfully!`);
+        quickViewModal.classList.remove("active");
+        document.body.style.overflow = "";
+      });
+
+      // Wishlist functionality
+      const wishlistIcon = document.querySelector(".wishlist-icon");
+      const wishlistCount = wishlistIcon.querySelector(".cart-count");
+      let wishlistItems = 0;
+
+      function updateWishlistCount() {
+        wishlistCount.textContent = wishlistItems;
+      }
+
+      const wishlistBtns = document.querySelectorAll(".wishlist-btn");
+
+      wishlistBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          if (btn.classList.contains("active")) {
+            btn.classList.remove("active");
+            wishlistItems--;
+            showToast("Product removed from wishlist");
+          } else {
+            btn.classList.add("active");
+            wishlistItems++;
+            showToast("Product added to wishlist");
+          }
+          updateWishlistCount();
+        });
+      });
+
+      // Back to top button
+      const backToTop = document.getElementById("back-to-top");
+
+      window.addEventListener("scroll", () => {
+        if (window.pageYOffset > 300) {
+          backToTop.classList.add("active");
+        } else {
+          backToTop.classList.remove("active");
+        }
+      });
+
+      backToTop.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      // Header scroll effect
+      const header = document.getElementById("header");
+      let lastScroll = 0;
+
+      window.addEventListener("scroll", () => {
+        const currentScroll = window.pageYOffset;
+
+        if (currentScroll > 100) {
+          header.style.boxShadow = "0 5px 20px rgba(0, 0, 0, 0.1)";
+        } else {
+          header.style.boxShadow = "var(--shadow)";
+        }
+
+        lastScroll = currentScroll;
+      });
+
+      // Newsletter form
+      const newsletterForm = document.querySelector(".newsletter-form");
+
+      newsletterForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = newsletterForm.querySelector(".newsletter-input").value;
+
+        showToast("Thank you for subscribing!");
+        newsletterForm.reset();
+      });
+
+      // Scroll animations
+      const animateOnScroll = () => {
+        const elements = document.querySelectorAll(
+          ".section-title, .category-card, .product-card, .feature-item, .banner-item"
+        );
+
+        elements.forEach((element) => {
+          const elementTop = element.getBoundingClientRect().top;
+          const elementBottom = element.getBoundingClientRect().bottom;
+
+          if (elementTop < window.innerHeight && elementBottom > 0) {
+            element.style.opacity = "1";
+            element.style.transform = "translateY(0)";
+          }
+        });
+      };
+
+      window.addEventListener("scroll", animateOnScroll);
+      window.addEventListener("load", animateOnScroll);
+
+      // Initialize animations
+      document
+        .querySelectorAll(
+          ".section-title, .category-card, .product-card, .feature-item, .banner-item"
+        )
+        .forEach((element) => {
+          element.style.opacity = "0";
+          element.style.transform = "translateY(20px)";
+          element.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        });
+    </script>
+  </body>
+</html>
